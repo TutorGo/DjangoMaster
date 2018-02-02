@@ -1,5 +1,6 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 import datetime
+
 '''
 http://127.0.0.1:8000/hello 를 방문해 Hello World 메시지를 볼 때
 장고는 어떻게 작동 할까?
@@ -31,4 +32,15 @@ def hello(request):
 def current_datetime(request):
     now = datetime.datetime.now()
     html = '<html><body>It is now {}.</body></html>'.format(now)
+    return HttpResponse(html)
+
+
+def hours_ahead(request, offset):
+    try:
+        int(offset)
+    except ValueError:
+        raise Http404
+    assert False
+    time = datetime.datetime.now() + datetime.timedelta(hours=offset)
+    html = '<html><body>In {} hours(s), it will be{}</body></html>'.format(offset, time)
     return HttpResponse(html)

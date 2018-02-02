@@ -15,11 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import hello, current_datetime
+from .views import hello, current_datetime, hours_ahead
 
-
+"""
+약결합은 부분 조각을 상호 교환할 수 있게 만드는 것이 의미가 있다는 것을 나타내는 소프트웨어 개발 접근법이다.
+조각 중 하나의 변경 사항은 다른 조각에 거의 영향을 미치지 않는다.
+current_datetime에 대해서 2개의 URL을 사용하는 것이 약결합의 예 다.
+"""
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', hello),
-    path('time/', current_datetime)
+    path('time/', current_datetime),
+    path('another-time-page/', current_datetime),
+    path(r'time/plus/<int:offset>/', hours_ahead)
 ]
