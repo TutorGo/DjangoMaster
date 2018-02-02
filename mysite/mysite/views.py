@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-
+import datetime
 '''
 http://127.0.0.1:8000/hello 를 방문해 Hello World 메시지를 볼 때
 장고는 어떻게 작동 할까?
@@ -23,5 +23,12 @@ ROOT_URLCONF 설정이 가리키는 URLconf가 로드된다. 그런 다음, URLc
 6. 장고는 HttpResponse를 적절한 HTTP 응답으로 변환해 웹 페이지를 만든다
 '''
 
+
 def hello(request):
     return HttpResponse('Hello World')
+
+
+def current_datetime(request):
+    now = datetime.datetime.now()
+    html = '<html><body>It is now {}.</body></html>'.format(now)
+    return HttpResponse(html)
