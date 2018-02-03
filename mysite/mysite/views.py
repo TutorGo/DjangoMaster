@@ -1,6 +1,9 @@
 from django.http import HttpResponse, Http404
 import datetime
 
+from django.template import Context
+from django.template.loader import get_template
+
 '''
 http://127.0.0.1:8000/hello 를 방문해 Hello World 메시지를 볼 때
 장고는 어떻게 작동 할까?
@@ -31,7 +34,20 @@ def hello(request):
 
 def current_datetime(request):
     now = datetime.datetime.now()
-    html = '<html><body>It is now {}.</body></html>'.format(now)
+    """
+    get_template 어떻게 템플릿을 찾는지 보자
+    
+    - APP_DIRS가 True로 설정돼 있고, DTL을 사용 중이라고 가정하면 현재 앱에서 템플릿 디렉터리를 찾는다
+    
+    - 현재 응용 프로그램에서 템플릿을 찾지 못하면 get_template()은 DIRS의 템플릿 디렉터리를 get_template()에
+    전달한 템플릿 이름과 결합하고 템플릿을 찾을 때까지 각 단계를 순서대로 수행한다. 예를 들어, DIRS의 첫 번쨰 항목이
+    '/hoem/django/mysite/templates'로 설정된 경우, 위의 get_template() 호출은 /home/django/mysite/
+    template/current_datetime.html 템플릿을 찾는다.
+    
+    - get_template() 가 지정된 이름의 템플릿을 찾을 수 없으면 TemplateDoesNotExist 예외가 발생한다.
+    """
+    t = get_template('current_datetime.html')
+    html = t.render(Context({'current_date': now}))
     return HttpResponse(html)
 
 

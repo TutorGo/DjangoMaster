@@ -15,6 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+TEMPLATES_DIRS = os.path.join(BASE_DIR, 'templates')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -49,10 +50,20 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'mysite.urls'
 
+"""
+- DIRS는 엔진이 템플릿 소스 파일을 검색할 순서로 검색해야 하는 디렉터리 리스트를 정의한다
+
+- APP_DIRS는 엔진이 설치돤 응용 프로그램 내에서 템플릿을 찾아야 하는지의 여부를 알려준다.
+규약에 따라 APPS_DIRS가 True로 설정되면 장고 템플릿은 각 INSTALLED_APPS에서 "templates"
+하위 디렉터리를 찾는다 이렇게 하면 DIRS가 비어 있는 경우에도 템플릿 엔진에서 응용 프로그램 템플릿을 찾을 수 있다
+
+- OPTIONS는 백엔드 관련 설정을 포함한다.
+"""
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIRS],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
